@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">
+        <button onclick="openPopup();">Start Recording</button>
+        <video id="source" autoplay width="400px" height="400px"/>
+      </div>
+
+      <script>
+        async function startCapture() {
+  return await navigator.mediaDevices.getDisplayMedia();
+}
+
+function openPopup() {
+  startCapture().then((stream) => {
+    let video = document.getElementById("source");
+    video.srcObject = stream;
+    let popUpWindow = window.open("", "_blank", "x=y");
+    let videoElem = document.createElement("video");
+    videoElem.autoplay = true;
+    videoElem.muted = true;
+    let remoteVideo = popUpWindow.document.body.appendChild(videoElem);
+    remoteVideo.srcObject = stream;
+
+  });
+}
+
+      </script>
+</body>
+</html>
